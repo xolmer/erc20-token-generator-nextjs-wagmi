@@ -1,6 +1,6 @@
 import '../styles/globals.css';
-
 import '@rainbow-me/rainbowkit/styles.css';
+
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { chain, configureChains, createClient, WagmiConfig, defaultChains } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -8,8 +8,8 @@ import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 const { chains, provider } = configureChains(
-  [chain.polygonMumbai],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID })]
+  [chain.polygonMumbai, chain.rinkeby, chain.goerli],
+  [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
@@ -25,11 +25,14 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <div className="bg-gray-900 min-h-screen">
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          {/* tailwindcss bg dark */}
+          <Component {...pageProps} />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </div>
   );
 }
 
