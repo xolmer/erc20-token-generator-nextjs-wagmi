@@ -149,7 +149,6 @@ const Home = () => {
                             onChange={(e) => setAddress(e.target.value)}
                           />
                         </div>
-                        Button submit
                         <div className="col-span-6 sm:col-span-3">
                           <button
                             type="submit"
